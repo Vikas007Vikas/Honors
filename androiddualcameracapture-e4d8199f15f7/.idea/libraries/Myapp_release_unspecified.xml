@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Myapp-release-unspecified">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.android/build-cache/4b2d1b3f823be30f800fb253d40a35d029073704/output/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.android/build-cache/4b2d1b3f823be30f800fb253d40a35d029073704/output/jars/libs/VuforiaUnityPlayer.jar!/" />
+      <root url="file://$USER_HOME$/.android/build-cache/4b2d1b3f823be30f800fb253d40a35d029073704/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/4b2d1b3f823be30f800fb253d40a35d029073704/output/jars/libs/unity-classes.jar!/" />
+      <root url="jar://$USER_HOME$/.android/build-cache/4b2d1b3f823be30f800fb253d40a35d029073704/output/jars/libs/Vuforia.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

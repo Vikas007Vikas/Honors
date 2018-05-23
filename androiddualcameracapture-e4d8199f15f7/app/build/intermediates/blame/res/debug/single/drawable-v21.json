@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "/home/vikas007/jens_grubert-androiddualcameracapture-e4d8199f15f7/app/build/intermediates/res/merged/debug/drawable-v21/abc_btn_colored_material.xml",
+        "source": "/home/vikas007/.android/build-cache/ee1c0aef18d0ba6d0cd543295b017405a3837ba4/output/res/drawable-v21/abc_btn_colored_material.xml"
+    },
+    {
+        "merged": "/home/vikas007/jens_grubert-androiddualcameracapture-e4d8199f15f7/app/build/intermediates/res/merged/debug/drawable-v21/abc_edit_text_material.xml",
+        "source": "/home/vikas007/.android/build-cache/ee1c0aef18d0ba6d0cd543295b017405a3837ba4/output/res/drawable-v21/abc_edit_text_material.xml"
+    },
+    {
+        "merged": "/home/vikas007/jens_grubert-androiddualcameracapture-e4d8199f15f7/app/build/intermediates/res/merged/debug/drawable-v21/abc_action_bar_item_background_material.xml",
+        "source": "/home/vikas007/.android/build-cache/ee1c0aef18d0ba6d0cd543295b017405a3837ba4/output/res/drawable-v21/abc_action_bar_item_background_material.xml"
+    },
+    {
+        "merged": "/home/vikas007/jens_grubert-androiddualcameracapture-e4d8199f15f7/app/build/intermediates/res/merged/debug/drawable-v21/notification_action_background.xml",
+        "source": "/home/vikas007/.android/build-cache/ee1c0aef18d0ba6d0cd543295b017405a3837ba4/output/res/drawable-v21/notification_action_background.xml"
+    }
+]

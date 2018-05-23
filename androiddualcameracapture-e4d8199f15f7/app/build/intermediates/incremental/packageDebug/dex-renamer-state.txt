@@ -1,0 +1,7 @@
+#Tue May 22 17:14:43 IST 2018
+base.0=/home/vikas007/jens_grubert-androiddualcameracapture-e4d8199f15f7/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_8f403a15ae927ea19c3db554b246e39663aca33b
+renamed.1=classes2.dex
+renamed.0=classes.dex
+file.1=/home/vikas007/jens_grubert-androiddualcameracapture-e4d8199f15f7/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_1f00af7e0fdbba742a018f7e5613aae3f6886872/classes.dex
+base.1=/home/vikas007/jens_grubert-androiddualcameracapture-e4d8199f15f7/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_1f00af7e0fdbba742a018f7e5613aae3f6886872
+file.0=/home/vikas007/jens_grubert-androiddualcameracapture-e4d8199f15f7/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_8f403a15ae927ea19c3db554b246e39663aca33b/classes.dex

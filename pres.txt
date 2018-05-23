@@ -1,0 +1,30 @@
+Introduction on User-perspective Rendering
+- What is it?
+- How is it different from device perspective rendering.
+
+Initial work
+- Augmenting a virtual object onto a real scene using a marker
+	- Usage of vuforia
+	- Usage of Unity
+	- adding this unity project into an android project.
+- Face detection using front camera in android
+	- Only 2D face detection done
+	- Used in-built face tracking api in android(for now)
+	- Obtain approximate position of the head/eye using face tracking (x,y,z->fixed)
+- Requirement of simultaneous access of both front and rear camera
+	- Not possible using opencv
+	- software requirement - snapdragon 820 processor (htc one m8)
+	- Implemented an android app where both front and back cameras can be previewed simultaneously.
+	- Augmented the virtual object onto the real scene
+	- The real scene is rendered with respect to the device camera
+	- Next part is to use eye position or coordinates to convert the scene into user perspective.
+
+/* ur part */
+
+- We used homography transformation to convert the device perspective to user perspective.
+	- Have to find intrinsic parameters of the rear camera Kr. (Used classic calibration method)
+	- Have to find extrinsic parameters of the rear camera Mr. 
+		- pnpResultIsValid = cv::solvePnP(sourceKeypointLocationsIn3D, queryInlierPoints,
+                                cameraMatrix, distCoeffs,
+                                rotationVector, translationVector);
+			Here, rotationVector and translationVector are the extrinsic parameters. 

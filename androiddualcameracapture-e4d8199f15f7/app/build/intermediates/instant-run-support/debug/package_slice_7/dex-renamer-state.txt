@@ -1,0 +1,4 @@
+#Sat Dec 02 04:49:52 IST 2017
+base.0=/home/vikas007/jens_grubert-androiddualcameracapture-e4d8199f15f7/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_7
+renamed.0=classes.dex
+file.0=/home/vikas007/jens_grubert-androiddualcameracapture-e4d8199f15f7/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_7/classes.dex
