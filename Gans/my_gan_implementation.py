@@ -12,6 +12,7 @@ from keras.models import Model
 from keras.datasets import mnist
 from keras.models import load_model
 from utils import load_images
+from keras.losses import binary_crossentropy,mean_squared_error
 
 import numpy as np
 import math
@@ -32,6 +33,7 @@ def build_generator(inputs,image_size):
     layer_filters = [128,256,512,1024]
 
     x = inputs
+    #print("abc:",x.shape)
     for filters in layer_filters:
         strides = 2
         x = BatchNormalization()(x)
@@ -94,58 +96,58 @@ def train(models,images,x_train,params):
     #number of elements in the train dataset
     train_size = x_train.shape[0]
     images_size = images.shape[0]
-    for i in range(train_steps):
-        rand_indexes = np.random.randint(0,train_size,size=batch_size)
-        depth_images_real = x_train[rand_indexes]
+    for epoch in range(train_steps):
+        #rand_indexes = np.random.randint(0,train_size,size=batch_size)
+        for i in range(images_size):
+            depth_image_real = x_train[i]
+            depth_image_real = np.expand_dims(depth_image_real, axis=0)
+            input_image = images[i]
+            input_image = np.expand_dims(input_image, axis=0)
+            print('added:',input_image.shape)
+            depth_image_fake = generator.predict(input_image)
 
-        rand_indexes = np.random.randint(0,images_size,size=batch_size)
-        input_images = images[rand_indexes]
-        print('added:',input_images.shape)
-        depth_images_fake = generator.predict(input_images)
+            # real+fake images = 1 batch of train data
+            x = np.concatenate((depth_image_real,depth_image_fake))
+            #label real and fake images
+            #real images label is 1.0
+            y = np.ones([2*batch_size,1])
+            #fake images label is 0.0
+            y[batch_size:,:]=0.0
+            #train discriminator network, log the loss and accuracy
+            loss, acc = discriminator.train_on_batch(x,y)
+            log = "%d: [discriminator loss: %f, acc: %f]" % (i, loss, acc)
 
-        # real+fake images = 1 batch of train data
-        x = np.concatenate((depth_images_real,depth_images_fake))
-        #label real and fake images
-        #real images label is 1.0
-        y = np.ones([2*batch_size,1])
-        #fake images label is 0.0
-        y[batch_size:,:]=0.0
-        #train discriminator network, log the loss and accuracy
-        loss, acc = discriminator.train_on_batch(x,y)
-        log = "%d: [discriminator loss: %f, acc: %f]" % (i, loss, acc)
+            #train the adversarial network for 1 batch
+            # 1 batch of fake images with label=1.0
+            # since the discriminator weights are frozen in adversarial network
+            # only the generator is trained
 
-        #train the adversarial network for 1 batch
-        # 1 batch of fake images with label=1.0
-        # since the discriminator weights are frozen in adversarial network
-        # only the generator is trained
-        rand_indexes = np.random.randint(0,images_size,size=batch_size)
-        input_images = images[rand_indexes]
-        #label fake_images as real or 1.0
-        y = np.ones([batch_size,1])
-        # train the adversarial network
-        # note that unlike in discriminator training,
-        # we do not save the fake images in a variable
-        # the fake images go to the discriminator input of the adversarial
-        # for classification
-        # log the loss and accuracy
-        loss, acc = adversarial.train_on_batch(input_images,y)
-        log = "%s [adversarial loss: %f, acc: %f]" % (log, loss, acc)
-        print(log)
-        if (i + 1) % save_interval == 0:
-            if (i + 1) == train_steps:
-                show = True
-            else:
-                show = False
+            #label fake_images as real or 1.0
+            y = np.ones([batch_size,1])
+            # train the adversarial network
+            # note that unlike in discriminator training,
+            # we do not save the fake images in a variable
+            # the fake images go to the discriminator input of the adversarial
+            # for classification
+            # log the loss and accuracy
+            loss, acc = adversarial.train_on_batch(input_image,y)
+            log = "%s [adversarial loss: %f, acc: %f]" % (log, loss, acc)
+            print(log)
+            if (i + 1) % save_interval == 0:
+                if (i + 1) == train_steps:
+                    show = True
+                else:
+                    show = False
 
-            # plot generator images on a periodic basis
-            plot_images(generator,
-                        noise_input=noise_input,
-                        show=show,
-                        step=(i + 1),
-                        model_name=model_name)
-    # save the model after training the generator
-    # the trained generator can be reloaded for future depth generation
-    generator.save(model_name + ".h5")
+                # plot generator images on a periodic basis
+                plot_images(generator,
+                            noise_input=noise_input,
+                            show=show,
+                            step=(i + 1),
+                            model_name=model_name)
+        # save the model after training the generator
+        # the trained generator can be reloaded for future depth generation
+        generator.save(model_name + ".h5")
 
 def plot_images(generator,
                 noise_input,
@@ -170,6 +172,13 @@ def plot_images(generator,
         plt.show()
     else:
         plt.close('all')
+
+def myloss(fake_images,real_images):
+    def loss(y_true,y_pred):
+        loss1 = binary_crossentropy(y_true,y_pred)
+        loss2 = mean_squared_error(real_images,fake_images)
+        return loss1+loss2
+    return loss
 
 def build_and_train_models():
     data = load_images('./images')
@@ -218,7 +227,8 @@ def build_and_train_models():
     discriminator.trainable = False
     #adversarial = generator+discriminator
     adversarial = Model(inputs,discriminator(generator(inputs)),name=model_name)
-    adversarial.compile(loss='binary_crossentropy',optimizer=optimizer,metrics=['accuracy'])
+
+    adversarial.compile(loss=myloss(generator(inputs),x_train),optimizer=optimizer,metrics=['accuracy'])
     adversarial.summary()
 
     #train discriminator and adversarial networks
